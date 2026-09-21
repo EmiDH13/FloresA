@@ -23,9 +23,14 @@
         --petal-blue: radial-gradient(circle, #60a5fa, #3b82f6, #1d4ed8);
       }
 
+      html, body {
+        height: 100%;
+        overflow: hidden;
+      }
+
       body {
         background-image: var(--color-bg);
-        min-height: 100vh;
+        min-height: 100dvh;
         display: flex;
         align-items: flex-end;
         justify-content: center;
@@ -358,6 +363,16 @@
         font-size: 12px;
         font-family: "Poppins", sans-serif;
         font-weight: 300;
+      }
+      @media (max-height: 800px) {
+        .flower_stem { height: 300px; }
+        .flower_center { top: -70px; width: 120px; height: 120px; }
+        .flower_petal { width: 55px; height: 110px; }
+        .flower_leaf { width: 55px; height: 95px; }
+        .flower_leaf-1 { bottom: 110px; }
+        .flower_leaf-2 { bottom: 150px; }
+        .flower_light { bottom: 350px; }
+        h1 { font-size: 20px; top: 15px; }
       }
     </style>
   </head>
