@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flor Amarilla para ti</title>
+    <style>
+      * { padding: 0; margin: 0; box-sizing: border-box; }
+
+      :root {
+        --color-bg: linear-gradient(160deg, #0a1628 0%, #1a0a2e 40%, #0d0d2b 70%, #1a0a2e 100%);
+        --line-color: linear-gradient(
+          to left top,
+          #82ff86 20%,
+          #144425,
+          #104e1c
+        );
+        --flower-center: radial-gradient(circle, #000, #ff5e00);
+        --leaf-color: radial-gradient(circle, #82ff86, #104e1c);
+        --petal-color: radial-gradient(circle, #ff5e00, #ffbb00);
+        --petal-orange: radial-gradient(circle, #ff8c00, #ff5e00, #cc3300);
+        --petal-purple: radial-gradient(circle, #c084fc, #7c3aed, #4c1d95);
+        --petal-blue: radial-gradient(circle, #60a5fa, #3b82f6, #1d4ed8);
+      }
+
+      body {
+        background-image: var(--color-bg);
+        min-height: 100vh;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      h1 {
+        position: absolute;
+        top: 30px;
+        text-align: center;
+        width: 100%;
+        color: rgba(255, 255, 255, 0.95);
+        font-family: "Poppins", sans-serif;
+        font-weight: 300;
+        font-size: 24px;
+        line-height: 1.6;
+        text-shadow: 0 0 20px rgba(100, 180, 255, 0.3);
+        padding: 0 20px;
+        z-index: 10;
+      }
+
+      /* ======== FLOR PRINCIPAL (ESTILO xd.html) ======== */
+
+      .flower_wrapper {
+        position: absolute;
+        left: 50%;
+        bottom: 20px;
+        transform: translateX(-50%);
+        z-index: 5;
+      }
+
+      .flower_stem {
+        width: 20px;
+        height: 400px;
+        background-image: var(--line-color);
+        border-radius: 20px;
+      }
+
+      .flower_center {
+        position: absolute;
+        top: -93px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: var(--flower-center);
+        z-index: 5;
+        opacity: 0;
+        animation: open-flower-center 1s ease-out forwards;
+        animation-delay: 1s;
+      }
+
+      .flower_petal {
+        position: absolute;
+        width: 70px;
+        height: 140px;
+        background: var(--petal-color);
+        clip-path: ellipse(35% 50% at 50% 50%);
+        top: -40%;
+        left: 50%;
+        transform-origin: center bottom;
+        opacity: 0;
+        animation: open-flower-petal 1s ease-out forwards;
+      }
+
+      .flower_petal-1  { --rotate-deg: 0deg;    animation-delay: 1.2s; }
+      .flower_petal-2  { --rotate-deg: 30deg;   animation-delay: 1.25s; }
+      .flower_petal-3  { --rotate-deg: 60deg;   animation-delay: 1.3s; }
+      .flower_petal-4  { --rotate-deg: 90deg;   animation-delay: 1.35s; }
+      .flower_petal-5  { --rotate-deg: 120deg;  animation-delay: 1.4s; }
+      .flower_petal-6  { --rotate-deg: 150deg;  animation-delay: 1.45s; }
+      .flower_petal-7  { --rotate-deg: 180deg;  animation-delay: 1.5s; }
+      .flower_petal-8  { --rotate-deg: 210deg;  animation-delay: 1.55s; }
+      .flower_petal-9  { --rotate-deg: 240deg;  animation-delay: 1.6s; }
+      .flower_petal-10 { --rotate-deg: 270deg; animation-delay: 1.65s; }
+      .flower_petal-11 { --rotate-deg: 300deg; animation-delay: 1.7s; }
+      .flower_petal-12 { --rotate-deg: 330deg; animation-delay: 1.75s; }
+
+      .flower_leaf {
+        position: absolute;
+        width: 70px;
+        height: 120px;
+        background: var(--leaf-color);
+        border-radius: 100px 20px 100px 20px;
+        transform-origin: center bottom;
+      }
+
+      .flower_leaf-1 {
+        left: 60%;
+        bottom: 150px;
+        transform: translateX(-45%) rotate(80deg);
+      }
+
+      .flower_leaf-2 {
+        left: 60%;
+        bottom: 200px;
+        transform: translateX(-55%) rotate(-80deg);
+      }
+
+      /* Luces de la flor (estilo xd.html) */
+      .flower_light {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: rgb(255, 251, 0);
+        border-radius: 50%;
+        filter: blur(2px);
+        z-index: 1;
+        bottom: 450px;
+        animation: light-ans 4s linear infinite backwards;
+      }
+
+      .flower_light-1  { left: 5%;   animation-delay: 1s; }
+      .flower_light-2  { left: 15%;  animation-delay: 0.5s; }
+      .flower_light-3  { left: 25%;  animation-delay: 0.3s; }
+      .flower_light-4  { left: 35%;  animation-delay: 0.9s; }
+      .flower_light-5  { left: 45%;  animation-delay: 1.5s; }
+      .flower_light-6  { left: 55%;  animation-delay: 3s; }
+      .flower_light-7  { left: 65%;  animation-delay: 2s; }
+      .flower_light-8  { left: 75%;  animation-delay: 3.5s; }
+
+      /* Luces de fondo */
+      .light {
+        position: absolute;
+        bottom: 0px;
+        width: 10px;
+        height: 10px;
+        background-color: rgb(255, 251, 0);
+        border-radius: 50%;
+        filter: blur(2px);
+        animation: light-ans-background 7s linear infinite backwards;
+        z-index: 1;
+      }
+
+      .light-1  { left: 100px;  animation-delay: 1s; }
+      .light-2  { left: 200px;  animation-delay: 0.5s; }
+      .light-3  { left: 600px;  animation-delay: 0.3s; }
+      .light-4  { left: 800px;  animation-delay: 0.9s; }
+      .light-5  { left: 450px;  animation-delay: 1.5s; }
+      .light-6  { left: 100px;  animation-delay: 3s; }
+      .light-7  { left: 900px;  animation-delay: 2s; }
+      .light-8  { left: 600px;  animation-delay: 3.5s; }
+      .light-9  { left: 700px;  animation-delay: 2s; }
+      .light-10 { left: 950px;  animation-delay: 3.5s; }
+      .light-11 { left: 750px;  animation-delay: 3s; }
+      .light-12 { left: 850px;  animation-delay: 0.5s; }
+
+      @keyframes open-flower-petal {
+        0% {
+          transform: translateX(-50%) translateY(50px) rotate(0deg);
+          opacity: 0;
+        }
+        50% { opacity: 1; }
+        100% {
+          transform: translateX(-50%) translateY(0) rotate(var(--rotate-deg));
+          opacity: 1;
+        }
+      }
+
+      @keyframes open-flower-center {
+        0% {
+          transform: translateX(-50%) scale(0);
+          opacity: 0;
+        }
+        100% {
+          transform: translateX(-50%) scale(1);
+          opacity: 1;
+        }
+      }
+
+      @keyframes light-ans {
+        0% {
+          opacity: 0;
+          transform: translateY(0px);
+        }
+        25% {
+          opacity: 1;
+          transform: translateY(-50px) translateX(-20px);
+        }
+        50% {
+          opacity: 1;
+          transform: translateY(-150px) translateX(20px);
+          filter: blur(2px);
+        }
+        75% {
+          transform: translateY(-200px) translateX(-20px);
+          filter: blur(2px);
+        }
+        100% {
+          transform: translateY(-300px);
+          opacity: 0;
+          filter: blur(10px);
+        }
+      }
+
+      @keyframes light-ans-background {
+        0% {
+          opacity: 0;
+          transform: translateY(0) translateX(0);
+        }
+        25% {
+          opacity: 1;
+          transform: translateY(-100px) translateX(10px);
+        }
+        50% {
+          transform: translateY(-200px) translateX(-10px);
+        }
+        75% {
+          transform: translateY(-400px) translateX(15px);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-600px) translateX(-5px);
+        }
+      }
+
+      /* ======== FLORES DECORATIVAS (SIN HOJAS NI CENTROS) ======== */
+
+      .deco-flower {
+        position: absolute;
+        z-index: 2;
+        opacity: 0;
+        animation: deco-appear 1.5s ease-out forwards;
+      }
+
+      .deco-1 { animation-delay: 2.5s; bottom: 15%; left: 8%; }
+      .deco-2 { animation-delay: 3.0s; bottom: 10%; right: 12%; }
+      .deco-3 { animation-delay: 3.5s; bottom: 25%; left: 18%; }
+      .deco-4 { animation-delay: 4.0s; bottom: 8%; left: 35%; }
+      .deco-5 { animation-delay: 4.5s; bottom: 12%; right: 28%; }
+
+      .deco-flower .stem {
+        width: 10px;
+        height: 120px;
+        background-image: var(--line-color);
+        border-radius: 10px;
+        margin: 0 auto;
+      }
+
+      .deco-flower .petal {
+        position: absolute;
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        top: -15px;
+        left: 50%;
+        transform-origin: center bottom;
+        opacity: 0;
+        animation: deco-petal-open 1s ease-out forwards;
+      }
+
+      /* Pétalos de la flor decorativa 1 - amarillo */
+      .deco-1 .petal { background: var(--petal-color); width: 28px; height: 50px; }
+      .deco-1 .petal-1 { --pd: 0deg;    animation-delay: 2.5s; }
+      .deco-1 .petal-2 { --pd: 45deg;   animation-delay: 2.55s; }
+      .deco-1 .petal-3 { --pd: 90deg;   animation-delay: 2.6s; }
+      .deco-1 .petal-4 { --pd: 135deg;  animation-delay: 2.65s; }
+      .deco-1 .petal-5 { --pd: 180deg;  animation-delay: 2.7s; }
+      .deco-1 .petal-6 { --pd: 225deg;  animation-delay: 2.75s; }
+      .deco-1 .petal-7 { --pd: 270deg;  animation-delay: 2.8s; }
+      .deco-1 .petal-8 { --pd: 315deg;  animation-delay: 2.85s; }
+
+      /* Pétalos de la flor decorativa 2 - naranja */
+      .deco-2 .petal { background: var(--petal-orange); width: 24px; height: 44px; }
+      .deco-2 .petal-1 { --pd: 0deg;    animation-delay: 3.0s; }
+      .deco-2 .petal-2 { --pd: 45deg;   animation-delay: 3.05s; }
+      .deco-2 .petal-3 { --pd: 90deg;   animation-delay: 3.1s; }
+      .deco-2 .petal-4 { --pd: 135deg;  animation-delay: 3.15s; }
+      .deco-2 .petal-5 { --pd: 180deg;  animation-delay: 3.2s; }
+      .deco-2 .petal-6 { --pd: 225deg;  animation-delay: 3.25s; }
+      .deco-2 .petal-7 { --pd: 270deg;  animation-delay: 3.3s; }
+      .deco-2 .petal-8 { --pd: 315deg;  animation-delay: 3.35s; }
+
+      /* Pétalos de la flor decorativa 3 - morado */
+      .deco-3 .petal { background: var(--petal-purple); width: 26px; height: 46px; }
+      .deco-3 .petal-1 { --pd: 0deg;    animation-delay: 3.5s; }
+      .deco-3 .petal-2 { --pd: 45deg;   animation-delay: 3.55s; }
+      .deco-3 .petal-3 { --pd: 90deg;   animation-delay: 3.6s; }
+      .deco-3 .petal-4 { --pd: 135deg;  animation-delay: 3.65s; }
+      .deco-3 .petal-5 { --pd: 180deg;  animation-delay: 3.7s; }
+      .deco-3 .petal-6 { --pd: 225deg;  animation-delay: 3.75s; }
+      .deco-3 .petal-7 { --pd: 270deg;  animation-delay: 3.8s; }
+      .deco-3 .petal-8 { --pd: 315deg;  animation-delay: 3.85s; }
+
+      /* Pétalos de la flor decorativa 4 - azul */
+      .deco-4 .petal { background: var(--petal-blue); width: 22px; height: 40px; }
+      .deco-4 .petal-1 { --pd: 0deg;    animation-delay: 4.0s; }
+      .deco-4 .petal-2 { --pd: 45deg;   animation-delay: 4.05s; }
+      .deco-4 .petal-3 { --pd: 90deg;   animation-delay: 4.1s; }
+      .deco-4 .petal-4 { --pd: 135deg;  animation-delay: 4.15s; }
+      .deco-4 .petal-5 { --pd: 180deg;  animation-delay: 4.2s; }
+      .deco-4 .petal-6 { --pd: 225deg;  animation-delay: 4.25s; }
+      .deco-4 .petal-7 { --pd: 270deg;  animation-delay: 4.3s; }
+      .deco-4 .petal-8 { --pd: 315deg;  animation-delay: 4.35s; }
+
+      /* Pétalos de la flor decorativa 5 - amarillo */
+      .deco-5 .petal { background: var(--petal-color); width: 30px; height: 52px; }
+      .deco-5 .petal-1 { --pd: 0deg;    animation-delay: 4.5s; }
+      .deco-5 .petal-2 { --pd: 45deg;   animation-delay: 4.55s; }
+      .deco-5 .petal-3 { --pd: 90deg;   animation-delay: 4.6s; }
+      .deco-5 .petal-4 { --pd: 135deg;  animation-delay: 4.65s; }
+      .deco-5 .petal-5 { --pd: 180deg;  animation-delay: 4.7s; }
+      .deco-5 .petal-6 { --pd: 225deg;  animation-delay: 4.75s; }
+      .deco-5 .petal-7 { --pd: 270deg;  animation-delay: 4.8s; }
+      .deco-5 .petal-8 { --pd: 315deg;  animation-delay: 4.85s; }
+
+      @keyframes deco-appear {
+        0% { opacity: 0; transform: scale(0.3); }
+        60% { opacity: 1; }
+        100% { opacity: 1; transform: scale(1); }
+      }
+
+      @keyframes deco-petal-open {
+        0% {
+          transform: translateX(-50%) translateY(10px) rotate(0deg) scale(0.5);
+          opacity: 0;
+        }
+        50% { opacity: 1; }
+        100% {
+          transform: translateX(-50%) translateY(0) rotate(var(--pd)) scale(1);
+          opacity: 1;
+        }
+      }
+
+      .footer-note {
+        position: absolute;
+        bottom: 15px;
+        text-align: center;
+        width: 100%;
+        color: rgba(148, 163, 220, 0.5);
+        font-size: 12px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 300;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Audio: Continental - Bratty, Nsqk, Méne -->
+    <audio id="id_audio" src="continental.mp3"></audio>
+
+    <h1>
+      De alguna u otra forma,<br>
+      siempre te daré una flor,<br>
+      ya sea que puedas sentirla<br>
+      o que nunca se seque como esta...<br>
+      <span style="font-weight: 500; font-size: 28px; color: #ffd700; display: block; margin-top: 10px; text-shadow: 0 0 20px rgba(255,215,0,0.5);">
+        Te amo, Mina 💛
+      </span>
+    </h1>
+
+    <!-- FLOR PRINCIPAL (ESTILO xd.html) -->
+    <div class="sunflower">
+      <div class="flower_wrapper">
+        <div class="flower_stem"></div>
+        <div class="flower_center"></div>
+        <div class="flower_petal flower_petal-1"></div>
+        <div class="flower_petal flower_petal-2"></div>
+        <div class="flower_petal flower_petal-3"></div>
+        <div class="flower_petal flower_petal-4"></div>
+        <div class="flower_petal flower_petal-5"></div>
+        <div class="flower_petal flower_petal-6"></div>
+        <div class="flower_petal flower_petal-7"></div>
+        <div class="flower_petal flower_petal-8"></div>
+        <div class="flower_petal flower_petal-9"></div>
+        <div class="flower_petal flower_petal-10"></div>
+        <div class="flower_petal flower_petal-11"></div>
+        <div class="flower_petal flower_petal-12"></div>
+        <div class="flower_leaf flower_leaf-1"></div>
+        <div class="flower_leaf flower_leaf-2"></div>
+
+        <!-- Luces de la flor -->
+        <div class="flower_light flower_light-1"></div>
+        <div class="flower_light flower_light-2"></div>
+        <div class="flower_light flower_light-3"></div>
+        <div class="flower_light flower_light-4"></div>
+        <div class="flower_light flower_light-5"></div>
+        <div class="flower_light flower_light-6"></div>
+        <div class="flower_light flower_light-7"></div>
+        <div class="flower_light flower_light-8"></div>
+      </div>
+    </div>
+
+    <!-- Luces de fondo -->
+    <div class="light light-1"></div>
+    <div class="light light-2"></div>
+    <div class="light light-3"></div>
+    <div class="light light-4"></div>
+    <div class="light light-5"></div>
+    <div class="light light-6"></div>
+    <div class="light light-7"></div>
+    <div class="light light-8"></div>
+    <div class="light light-9"></div>
+    <div class="light light-10"></div>
+    <div class="light light-11"></div>
+    <div class="light light-12"></div>
+
+    <!-- FLORES DECORATIVAS (SIN HOJAS NI CENTROS) -->
+
+    <!-- Flor decorativa 1: amarilla (izquierda) -->
+    <div class="deco-flower deco-1">
+      <div class="stem"></div>
+      <div class="petal petal-1" style="transform: translateX(-50%) rotate(0deg);"></div>
+      <div class="petal petal-2" style="transform: translateX(-50%) rotate(45deg);"></div>
+      <div class="petal petal-3" style="transform: translateX(-50%) rotate(90deg);"></div>
+      <div class="petal petal-4" style="transform: translateX(-50%) rotate(135deg);"></div>
+      <div class="petal petal-5" style="transform: translateX(-50%) rotate(180deg);"></div>
+      <div class="petal petal-6" style="transform: translateX(-50%) rotate(225deg);"></div>
+      <div class="petal petal-7" style="transform: translateX(-50%) rotate(270deg);"></div>
+      <div class="petal petal-8" style="transform: translateX(-50%) rotate(315deg);"></div>
+    </div>
+
+    <!-- Flor decorativa 2: naranja (derecha) -->
+    <div class="deco-flower deco-2">
+      <div class="stem"></div>
+      <div class="petal petal-1" style="transform: translateX(-50%) rotate(0deg);"></div>
+      <div class="petal petal-2" style="transform: translateX(-50%) rotate(45deg);"></div>
+      <div class="petal petal-3" style="transform: translateX(-50%) rotate(90deg);"></div>
+      <div class="petal petal-4" style="transform: translateX(-50%) rotate(135deg);"></div>
+      <div class="petal petal-5" style="transform: translateX(-50%) rotate(180deg);"></div>
+      <div class="petal petal-6" style="transform: translateX(-50%) rotate(225deg);"></div>
+      <div class="petal petal-7" style="transform: translateX(-50%) rotate(270deg);"></div>
+      <div class="petal petal-8" style="transform: translateX(-50%) rotate(315deg);"></div>
+    </div>
+
+    <!-- Flor decorativa 3: morada (izquierda) -->
+    <div class="deco-flower deco-3">
+      <div class="stem"></div>
+      <div class="petal petal-1" style="transform: translateX(-50%) rotate(0deg);"></div>
+      <div class="petal petal-2" style="transform: translateX(-50%) rotate(45deg);"></div>
+      <div class="petal petal-3" style="transform: translateX(-50%) rotate(90deg);"></div>
+      <div class="petal petal-4" style="transform: translateX(-50%) rotate(135deg);"></div>
+      <div class="petal petal-5" style="transform: translateX(-50%) rotate(180deg);"></div>
+      <div class="petal petal-6" style="transform: translateX(-50%) rotate(225deg);"></div>
+      <div class="petal petal-7" style="transform: translateX(-50%) rotate(270deg);"></div>
+      <div class="petal petal-8" style="transform: translateX(-50%) rotate(315deg);"></div>
+    </div>
+
+    <!-- Flor decorativa 4: azul (centro-izquierda) -->
+    <div class="deco-flower deco-4">
+      <div class="stem"></div>
+      <div class="petal petal-1" style="transform: translateX(-50%) rotate(0deg);"></div>
+      <div class="petal petal-2" style="transform: translateX(-50%) rotate(45deg);"></div>
+      <div class="petal petal-3" style="transform: translateX(-50%) rotate(90deg);"></div>
+      <div class="petal petal-4" style="transform: translateX(-50%) rotate(135deg);"></div>
+      <div class="petal petal-5" style="transform: translateX(-50%) rotate(180deg);"></div>
+      <div class="petal petal-6" style="transform: translateX(-50%) rotate(225deg);"></div>
+      <div class="petal petal-7" style="transform: translateX(-50%) rotate(270deg);"></div>
+      <div class="petal petal-8" style="transform: translateX(-50%) rotate(315deg);"></div>
+    </div>
+
+    <!-- Flor decorativa 5: amarilla (derecha) -->
+    <div class="deco-flower deco-5">
+      <div class="stem"></div>
+      <div class="petal petal-1" style="transform: translateX(-50%) rotate(0deg);"></div>
+      <div class="petal petal-2" style="transform: translateX(-50%) rotate(45deg);"></div>
+      <div class="petal petal-3" style="transform: translateX(-50%) rotate(90deg);"></div>
+      <div class="petal petal-4" style="transform: translateX(-50%) rotate(135deg);"></div>
+      <div class="petal petal-5" style="transform: translateX(-50%) rotate(180deg);"></div>
+      <div class="petal petal-6" style="transform: translateX(-50%) rotate(225deg);"></div>
+      <div class="petal petal-7" style="transform: translateX(-50%) rotate(270deg);"></div>
+      <div class="petal petal-8" style="transform: translateX(-50%) rotate(315deg);"></div>
+    </div>
+
+    <script>
+      const audio = document.getElementById("id_audio");
+
+      // Empezar desde el segundo 18 del audio, automático al cargar
+      audio.currentTime = 18;
+      setTimeout(() => {
+        audio.play().catch(e => console.log("Auto-play bloqueado:", e));
+        audio.volume = 0.5;
+      }, 500);
+    </script>
+  </body>
+</html>
